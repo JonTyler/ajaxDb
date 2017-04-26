@@ -13,14 +13,11 @@ require_once "DatabaseManager.php";
 $db = new DatabaseManager();
 $sql = "SELECT CURTIME()";
 $conn = $db->getConn();
-while(true) {
-    try {
-        foreach ($conn->query($sql) as $row) {
-            echo "data: $row";
-        }
-    } catch (\PDOException $e) {
-        echo "data: Error occurred: " . $e->getMessage();
+try {
+    foreach ($conn->query($sql) as $row) {
+        echo "data: {$row[0]}";
     }
-    flush();
-    sleep(10);
+} catch (\PDOException $e) {
+    echo "data: Error occurred: " . $e->getMessage();
 }
+flush();
